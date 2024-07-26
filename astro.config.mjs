@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import netlify from "@astrojs/netlify";
+import vercel from "@astrojs/vercel/serverless";
 import robotsTxt from "astro-robots-txt";
 import UnoCSS from "@unocss/astro";
 import icon from "astro-icon";
@@ -10,20 +10,20 @@ import { remarkReadingTime } from "./src/lib/ remark-reading-time.mjs";
 
 import svelte from "@astrojs/svelte";
 
-import vercel from '@astrojs/vercel/serverless';
-
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://joshualarsen.dev/",
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
   integrations: [
-    sitemap(),
-    robotsTxt({
-      sitemap: [
-        "https://joshualarsen.dev/sitemap-index.xml",
-        "https://joshualarsen.dev/sitemap-0.xml",
-      ],
-    }),
+    //sitemap(),
+    //robotsTxt({
+    //  sitemap: [
+    //    "https://www.joshualarsen.dev/sitemap-index.xml",
+    //    "https://joshualarsen.dev/sitemap-0.xml",
+    //}),
     solidJs(),
     UnoCSS({ injectReset: true }),
     icon(),
@@ -32,13 +32,5 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkReadingTime],
   },
-  output: "server",
-  adapter: netlify({ edgeMiddleware: true }),
-  vite: {
-    assetsInclude: "**/*.riv",
-  },
-  output: 'server',
-  adapter: vercel({
-    webAnalytics: { enabled: true }
-  }),
+  output: 'server'
 });
