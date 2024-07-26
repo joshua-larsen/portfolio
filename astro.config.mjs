@@ -10,15 +10,18 @@ import { remarkReadingTime } from "./src/lib/ remark-reading-time.mjs";
 
 import svelte from "@astrojs/svelte";
 
+import vercel from '@astrojs/vercel/serverless';
+
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://gianmarco.xyz/",
+  site: "https://joshualarsen.dev/",
   integrations: [
     sitemap(),
     robotsTxt({
       sitemap: [
-        "https://gianmarco.xyz/sitemap-index.xml",
-        "https://gianmarco.xyz/sitemap-0.xml",
+        "https://joshualarsen.dev/sitemap-index.xml",
+        "https://joshualarsen.dev/sitemap-0.xml",
       ],
     }),
     solidJs(),
@@ -34,4 +37,8 @@ export default defineConfig({
   vite: {
     assetsInclude: "**/*.riv",
   },
+  output: 'server',
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
 });
